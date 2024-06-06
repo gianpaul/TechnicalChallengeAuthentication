@@ -35,20 +35,20 @@ Este proyecto sigue la arquitectura limpia (Clean Architecture) con las siguient
 ## Estructura del Proyecto
 
 TechnicalChallengeAuthentication/
-├── app/ # Módulo principal de la aplicación
-│ ├── src/
-│ │ ├── main/
-│ │ │ ├── java/com/example/technicalchallengeauthentication/
-│ │ │ │ ├── data/ # Capa de datos
-│ │ │ │ ├── domain/ # Capa de dominio
-│ │ │ │ ├── ui/ # Capa de presentación
-│ │ │ ├── res/
-├── build.gradle.kts
-├── gradle/
-├── gradle.properties
-├── gradlew
-├── gradlew.bat
-├── settings.gradle.kts
+pp/ # Módulo principal de la aplicación
+src/
+main/
+java/com/example/technicalchallengeauthentication/
+data/ # Capa de datos
+domain/ # Capa de dominio
+ui/ # Capa de presentación
+res/
+build.gradle.kts
+gradle/
+gradle.properties
+gradlew
+gradlew.bat
+settings.gradle.kts
 
 
 ### Descripción del Código
