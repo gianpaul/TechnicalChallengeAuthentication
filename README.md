@@ -60,6 +60,10 @@ settings.gradle.kts
 - **ui**: Contiene las pantallas y componentes de la interfaz de usuario utilizando Jetpack Compose. También incluye los ViewModels que siguen el patrón MVVM.
 - **di**: Configuración de Hilt para la inyección de dependencias.
 
+## Notas Adicionales
+
+- El email `eve.holt@reqres.in` pertenece al listado de usuarios. Sin embargo, por temas de prueba, se está negando el acceso ya que es el único que se puede registrar completamente.
+
 ## Instalación
 
 1. Clona este repositorio:
