@@ -2,7 +2,8 @@
 
 Este proyecto es parte de un desafío técnico para una big tech, que demuestra una implementación de autenticación utilizando Android. La aplicación está desarrollada en Kotlin y sigue principios de arquitectura limpia (Clean Architecture) y patrones de diseño recomendados.
 
-[Ver video de demostración](https://youtube.com/shorts/uk3wAAR-klQ?si=UVufUZ4RgMrakOb8)
+[![Ver video de demostración](https://img.youtube.com/vi/uk3wAAR-klQ/maxresdefault.jpg)](https://www.youtube.com/shorts/uk3wAAR-klQ)
+
 ## Características
 
 - Autenticación de usuarios mediante correo electrónico y contraseña.
