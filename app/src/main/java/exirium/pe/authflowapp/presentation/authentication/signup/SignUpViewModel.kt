@@ -3,12 +3,12 @@ package exirium.pe.authflowapp.presentation.authentication.signup
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import exirium.pe.authflowapp.core.presentation.BaseViewModel
-import exirium.pe.authflowapp.domain.repository.ReqresRepository
+import exirium.pe.authflowapp.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val reqresRepository: ReqresRepository,
+    private val authenticationRepository: AuthenticationRepository,
     savedStateHandle: SavedStateHandle? = null
 ) : BaseViewModel<SignUpState, SignUpEvent>(savedStateHandle) {
     override fun initialState(savedStateHandle: SavedStateHandle?): SignUpState {
@@ -30,9 +30,14 @@ class SignUpViewModel @Inject constructor(
         execute(
             onStart = { state.value.copy(isLoading = true) },
             onComplete = { it.copy(isLoading = false, navigateToColors = true) },
-            onError = { currentState, exception -> currentState.copy(toastMessage = exception.message, isLoading = false) },
+            onError = { currentState, exception ->
+                currentState.copy(
+                    toastMessage = exception.message,
+                    isLoading = false
+                )
+            },
             block = { currentState ->
-                reqresRepository.registerUser(currentState.email, currentState.password)
+                authenticationRepository.registerUser(currentState.email, currentState.password)
                 currentState
             }
         )

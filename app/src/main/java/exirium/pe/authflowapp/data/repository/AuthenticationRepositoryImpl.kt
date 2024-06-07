@@ -12,14 +12,13 @@ import exirium.pe.authflowapp.data.remote.service.ReqresApi
 import exirium.pe.authflowapp.domain.entity.Color
 import exirium.pe.authflowapp.domain.entity.Token
 import exirium.pe.authflowapp.domain.entity.User
-import exirium.pe.authflowapp.domain.repository.ReqresRepository
+import exirium.pe.authflowapp.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
-class ReqresRepositoryImpl @Inject constructor(
+class AuthenticationRepositoryImpl @Inject constructor(
     private val reqresApi: ReqresApi
-) : ReqresRepository {
-
-    override suspend fun getAllUsers(): List<User> {
+) : AuthenticationRepository {
+    override suspend fun fetchEmail(email: String): User? {
         val users = mutableListOf<User>()
         var currentPage = 1
         var totalPages: Int
@@ -30,12 +29,14 @@ class ReqresRepositoryImpl @Inject constructor(
                 transform = { it },
                 exception = UsersException("Error getting users")
             )
-            users.addAll(userResponse.data.map { it.asEntity() })
+            users.addAll(userResponse.data.map { it.asEntity() }
+                // Filter out the user with emai for test purposes
+                .filter { it.email != "eve.holt@reqres.in" })
             totalPages = userResponse.totalPages
             currentPage++
         } while (currentPage <= totalPages)
 
-        return users
+        return users.find { it.email == email }
     }
 
     override suspend fun registerUser(email: String, password: String): Token {

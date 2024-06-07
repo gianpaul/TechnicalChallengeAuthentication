@@ -3,12 +3,12 @@ package exirium.pe.authflowapp.presentation.color.colors
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import exirium.pe.authflowapp.core.presentation.BaseViewModel
-import exirium.pe.authflowapp.domain.repository.ReqresRepository
+import exirium.pe.authflowapp.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ColorListViewModel @Inject constructor(
-    private val reqresRepository: ReqresRepository,
+    private val authenticationRepository: AuthenticationRepository,
     savedStateHandle: SavedStateHandle? = null
 ) : BaseViewModel<ColorListState, ColorListEvent>(savedStateHandle) {
 
@@ -33,7 +33,7 @@ class ColorListViewModel @Inject constructor(
             onComplete = { it.copy(isLoading = false) },
             onError = { currentState, _ -> currentState.copy(isLoading = false) },
             block = { currentState ->
-                val colors = reqresRepository.getColors(currentState.page)
+                val colors = authenticationRepository.getColors(currentState.page)
                 currentState.copy(
                     colors = currentState.colors + colors,
                     page = currentState.page + 1,

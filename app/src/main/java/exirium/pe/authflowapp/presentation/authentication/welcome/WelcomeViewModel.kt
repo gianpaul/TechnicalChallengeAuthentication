@@ -1,16 +1,15 @@
 package exirium.pe.authflowapp.presentation.authentication.welcome
 
+import android.util.Patterns.EMAIL_ADDRESS
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import exirium.pe.authflowapp.core.presentation.BaseViewModel
-import exirium.pe.authflowapp.domain.repository.ReqresRepository
-import exirium.pe.authflowapp.domain.usecase.ValidateEmailUseCase
+import exirium.pe.authflowapp.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
-    private val reqresRepository: ReqresRepository,
-    private val validateEmailUseCase: ValidateEmailUseCase,
+    private val authenticationRepository: AuthenticationRepository,
     savedStateHandle: SavedStateHandle? = null
 ) : BaseViewModel<WelcomeState, WelcomeEvent>(savedStateHandle) {
 
@@ -28,16 +27,11 @@ class WelcomeViewModel @Inject constructor(
     }
 
     private fun validateEmail() {
-        val isValidateEmail = validateEmailUseCase.invoke(state.value.email)
-        // this for testing purposes
-        if (state.value.email == "eve.holt@reqres.in") {
-            setState { copy(emailExists = false, emailValidated = true, isLoading = false) }
+        val isValidateEmail = EMAIL_ADDRESS.matcher(state.value.email).matches()
+        if (isValidateEmail) {
+            checkEmailExists()
         } else {
-            if (isValidateEmail) {
-                checkEmailExists()
-            } else {
-                setState { copy(emailValidated = false, toastMessage = "This is not a valid email")}
-            }
+            setState { copy(emailValidated = false, toastMessage = "This is not a valid email") }
         }
     }
 
@@ -65,8 +59,7 @@ class WelcomeViewModel @Inject constructor(
                 )
             },
             block = { currentState ->
-                val users = reqresRepository.getAllUsers()
-                val user = users.find { it.email == currentState.email }
+                val user = authenticationRepository.fetchEmail(currentState.email)
                 currentState.copy(user = user)
             }
         )

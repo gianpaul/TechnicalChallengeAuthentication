@@ -4,14 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import exirium.pe.authflowapp.core.presentation.BaseViewModel
 import exirium.pe.authflowapp.domain.entity.User
-import exirium.pe.authflowapp.domain.repository.ReqresRepository
+import exirium.pe.authflowapp.domain.repository.AuthenticationRepository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val reqresRepository: ReqresRepository,
+    private val authenticationRepository: AuthenticationRepository,
     savedStateHandle: SavedStateHandle? = null
 ) : BaseViewModel<LogInState, LogInEvent>(savedStateHandle) {
     override fun initialState(savedStateHandle: SavedStateHandle?): LogInState {
@@ -51,7 +51,7 @@ class LogInViewModel @Inject constructor(
                 )
             },
             block = { currentState ->
-                reqresRepository.loginUser(currentState.email, currentState.password)
+                authenticationRepository.loginUser(currentState.email, currentState.password)
                 currentState
             }
         )
